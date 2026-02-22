@@ -385,7 +385,32 @@
     <script src="js/jquery.waypoints.min.js"></script>
     <script src="js/jquery.fancybox.min.js"></script>
     <script src="js/custom.js"></script>
+    <script>
+      document.getElementById("contactForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
+  const payload = {
+    fname:   document.getElementById("fname").value,
+    lname:   document.getElementById("lname").value,
+    phone:   document.getElementById("phone").value,
+    email:   document.getElementById("email").value,
+    service: document.getElementById("service").value,
+    message: document.getElementById("message").value,
+  };
+
+  const res = await fetch("https://d1-rest.skapstechnologies.workers.dev/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 12345",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await res.json();
+  console.log(data); // { success: true, action: "created" | "updated", ... }
+});
+    </script>
     
   </body>
   </html>
