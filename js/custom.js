@@ -303,13 +303,13 @@ $(function(){
 		console.log(menu_item);
 		if (window.scrollY > 500) { 
 			navbar.style = 'background-color: rgba(0,0,0,0.9); backdrop-filter: blur(5px); box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);'
-			console.log("In"); 
+			// console.log("In"); 
 		} else {
 			navbar.style = 'background-color: transparent; backdrop-filter: none; box-shadow: none;'
-			console.log("Out");
+			// console.log("Out");
 		}
 	});
-// bind contact form once DOM is ready (we're already inside $(function(){}) above)
+/* bind contact form once DOM is ready (we're already inside $(function(){}) above)
 		const form = document.getElementById('contactForm');
 		if (form) {
 			form.addEventListener('submit', async (event) => {
@@ -341,6 +341,6 @@ $(function(){
 		} else {
 			// no contact form on this page; nothing to do
 			// logging removed to avoid noise
-		}
+		}*/
 	
 })
