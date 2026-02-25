@@ -385,7 +385,7 @@
     <script src="js/jquery.waypoints.min.js"></script>
     <script src="js/jquery.fancybox.min.js"></script>
     <script src="js/custom.js"></script>
-    <script>
+   <script>
 document.getElementById("contactForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -403,15 +403,14 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
   };
 
   try {
+    const res = await fetch("https://website-leads.skapstechnologies.workers.dev/leads", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
-const res = await fetch("https://website-leads.skapstechnologies.workers.dev/leads", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    // 👈 No Authorization header needed anymore
-  },
-  body: JSON.stringify(payload),
-});
     const data = await res.json();
 
     if (data.success) {
