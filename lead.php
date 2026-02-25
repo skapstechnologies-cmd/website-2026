@@ -4,6 +4,11 @@
 
 header('Content-Type: application/json');
 
+// DISABLED: legacy contact form handler no longer in use
+http_response_code(410);
+echo json_encode(['success' => false, 'message' => 'handler disabled']);
+exit;
+
 // helper function to send error response and exit
 function fail($message, $code = 400) {
     http_response_code($code);
