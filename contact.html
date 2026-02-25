@@ -386,41 +386,50 @@
     <script src="js/jquery.fancybox.min.js"></script>
     <script src="js/custom.js"></script>
     <script>
-      document.getElementById("contactForm").addEventListener("submit", async (e) => {
+document.getElementById("contactForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  const btn = e.target.querySelector("button[type=submit]");
+  btn.disabled = true;
+  btn.innerText = "Sending...";
+
   const payload = {
-    fname:   document.getElementById("fname").value,
-    lname:   document.getElementById("lname").value,
-    phone:   document.getElementById("phone").value,
-    email:   document.getElementById("email").value,
+    fname:   document.getElementById("fname").value.trim(),
+    lname:   document.getElementById("lname").value.trim(),
+    phone:   document.getElementById("phone").value.trim(),
+    email:   document.getElementById("email").value.trim(),
     service: document.getElementById("service").value,
-    message: document.getElementById("message").value,
+    message: document.getElementById("message").value.trim(),
   };
 
-  const res = await fetch("https://d1-rest.skapstechnologies.workers.dev/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer 12345",
-    },
-    body: JSON.stringify(payload),
-  });
-// Temporary debug - remove after fixing
-console.log("Method:", request.method);
-console.log("URL:", request.url);
+  try {
 
-if (request.method === "OPTIONS") {
-  return new Response(null, { status: 204, headers: CORS_HEADERS });
-}
-
-if (request.method !== "POST") {
-  return jsonResponse({ error: "Method not allowed", receivedMethod: request.method, url: request.url }, 405);
-}
-  const data = await res.json();
-  console.log(data); // { success: true, action: "created" | "updated", ... }
+const res = await fetch("https://website-leads.skapstechnologies.workers.dev/leads", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    // 👈 No Authorization header needed anymore
+  },
+  body: JSON.stringify(payload),
 });
-    </script>
+    const data = await res.json();
+
+    if (data.success) {
+      alert(data.message);
+      e.target.reset();
+    } else {
+      alert("Error: " + (data.details?.join(", ") || data.error));
+    }
+
+  } catch (err) {
+    alert("Something went wrong. Please try again.");
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+    btn.innerText = "Send Message";
+  }
+});
+</script>
     
   </body>
   </html>
