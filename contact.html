@@ -420,7 +420,7 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
   console.log("[contact] submitting payload", payload);
 
   try {
-    const res = await fetch("https://website-leads.skapstechnologies.workers.dev/", {
+    const res = await fetch("https://website-leads.skapstechnologies.workers.dev/leads", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
