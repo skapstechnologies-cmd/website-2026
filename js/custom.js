@@ -300,7 +300,7 @@ $(function(){
 	document.addEventListener('scroll', function() {
 		const navbar = document.querySelector('.site-nav');
 		const menu_item = document.querySelector('.active a');
-		console.log(menu_item);
+		// console.log(menu_item);
 		if (window.scrollY > 500) { 
 			navbar.style = 'background-color: rgba(0,0,0,0.9); backdrop-filter: blur(5px); box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);'
 			// console.log("In"); 
