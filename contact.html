@@ -416,6 +416,9 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
     message: document.getElementById("message").value.trim(),
   };
 
+  // debug logging
+  console.log("[contact] submitting payload", payload);
+
   try {
     const res = await fetch("https://website-leads.skapstechnologies.workers.dev/", {
       method: "POST",
@@ -425,20 +428,33 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
       body: JSON.stringify(payload),
     });
 
-    const data = await res.json();
+    console.log("[contact] fetch completed, status", res.status, res.statusText);
 
-    if (data.success) {
-      showToast(data.action === "created" 
-        ? "✅ Message sent successfully!" 
-        : "✅ Your details have been updated!", "success");
-      e.target.reset();
-    } else {
-      showToast("❌ " + (data.details?.join(", ") || data.error), "error");
+    // guard against non-2xx responses
+    if (!res.ok) {
+      const text = await res.text();
+      console.error("[contact] server returned non-ok response", res.status, text);
+      throw new Error(`Network response was not ok (${res.status})`);
     }
 
+    const data = await res.json();
+    console.log("[contact] server response json", data);
+
+    if (data.success) {
+      showToast(
+        data.action === "created"
+          ? "✅ Message sent successfully!"
+          : "✅ Your details have been updated!",
+        "success"
+      );
+      e.target.reset();
+    } else {
+      console.warn("[contact] server indicated failure", data);
+      showToast("❌ " + (data.details?.join(", ") || data.error), "error");
+    }
   } catch (err) {
     showToast("❌ Something went wrong. Please try again.", "error");
-    console.error(err);
+    console.error("[contact] exception caught", err);
   } finally {
     btn.disabled = false;
     btn.innerText = "Send Message";
