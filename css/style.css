@@ -1,12 +1,4 @@
-/*
-* Template Name: Append
-* Template Author: Untree.co
-* Template License: https://creativecommons.org/licenses/by/3.0/
-* Author URI: https://untree.co/
 
-* Twitter: https://twitter.com/Untree_co
-* Facebook: https://web.facebook.com/Untree.co/
-*/
 html {
   overflow-x: hidden; }
 
@@ -552,15 +544,14 @@ transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 1000ms; }
 .burger.active:before {
   -webkit-transform: rotate(45deg);
   -moz-transform: rotate(45deg);
+  transform: rotate(45deg);
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=5);
   /*for IE*/ }
 
 .burger.active:after {
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=-5);
-  /*for IE*/ }
-
+  transform: rotate(-45deg);
 .burger:focus {
   outline: none; }
 
@@ -626,26 +617,24 @@ transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 1000ms; }
   .section-stack .image-stack__item--bottom {
     float: right;
     width: 75%; }
-  @supports ((display: -ms-grid) or (display: grid)) {
+  @supports (display: grid) {
     .section-stack .image-stack {
-      display: -ms-grid;
       display: grid;
       position: relative;
-      -ms-grid-columns: (1fr)[12];
-      grid-template-columns: repeat(12, 1fr); }
+      grid-template-columns: repeat(12, 1fr);
+    }
     .section-stack .image-stack__item--bottom {
       grid-column: 4 / -1;
-      -ms-grid-row: 1;
       grid-row: 1;
-      width: 100%; }
+      width: 100%;
+    }
     .section-stack .image-stack__item--top {
-      -ms-grid-row: 1;
       grid-row: 1;
-      -ms-grid-column: 1;
-      -ms-grid-column-span: 8;
       grid-column: 1 / span 8;
       padding-top: 20%;
-      width: 100%; } }
+      width: 100%;
+    }
+  }
 
 .service {
   display: block; }
@@ -2096,3 +2085,25 @@ transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 1000ms; }
         *{
           scroll-behavior: smooth;
         }
+        .toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 9999;
+  max-width: 320px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.toast.success { background: #22c55e; }
+.toast.error   { background: #ef4444; }
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}

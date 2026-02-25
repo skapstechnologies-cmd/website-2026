@@ -1,9 +1,4 @@
-<!-- /*
-* Template Name: Append
-* Template Author: Untree.co
-* Tempalte URI: https://untree.co/
-* License: https://creativecommons.org/licenses/by/3.0/
-*/ -->
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -385,7 +380,26 @@
     <script src="js/jquery.waypoints.min.js"></script>
     <script src="js/jquery.fancybox.min.js"></script>
     <script src="js/custom.js"></script>
-   <script>
+    
+<script>
+// --- Toast Helper ---
+function showToast(message, type = "success", duration = 4000) {
+  const existing = document.querySelector(".toast");
+  if (existing) existing.remove();
+
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.innerText = message;
+  document.body.appendChild(toast);
+
+  setTimeout(() => toast.classList.add("show"), 10);
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
+}
+
+// --- Form Submit ---
 document.getElementById("contactForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -414,14 +428,16 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
     const data = await res.json();
 
     if (data.success) {
-      alert(data.message);
+      showToast(data.action === "created" 
+        ? "✅ Message sent successfully!" 
+        : "✅ Your details have been updated!", "success");
       e.target.reset();
     } else {
-      alert("Error: " + (data.details?.join(", ") || data.error));
+      showToast("❌ " + (data.details?.join(", ") || data.error), "error");
     }
 
   } catch (err) {
-    alert("Something went wrong. Please try again.");
+    showToast("❌ Something went wrong. Please try again.", "error");
     console.error(err);
   } finally {
     btn.disabled = false;
